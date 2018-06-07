@@ -119,8 +119,11 @@ class Driver extends elFinderVolumeDriver
      **/
     protected function init()
     {
-        $this->fs = $this->options['filesystem'];
-        if (!($this->fs instanceof FilesystemInterface)) {
+        $filesystem = app('filesystem')->disk($this->options['filesystem']);
+
+        $this->fs = $filesystem->getDriver();
+        
+		if (!($this->fs instanceof FilesystemInterface)) {
             return $this->setError('A filesystem instance is required');
         }
 
